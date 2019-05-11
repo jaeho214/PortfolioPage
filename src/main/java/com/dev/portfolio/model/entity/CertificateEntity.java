@@ -20,6 +20,7 @@ public class CertificateEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long CertiNo; // PK
 
+    private String userId; // 사용자 구분을 위한 사용자 id
     private String Certification; // 자격사항
     private String getDate; //취득일자
     private String organization; // 발급기관
