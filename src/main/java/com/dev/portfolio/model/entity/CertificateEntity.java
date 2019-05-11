@@ -25,5 +25,5 @@ public class CertificateEntity {
     private String getDate; //취득일자
     private String organization; // 발급기관
     private String uri;// 사본 이미지 경로
-
+    private String text;
 }
