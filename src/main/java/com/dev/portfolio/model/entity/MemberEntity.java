@@ -16,7 +16,7 @@ public class MemberEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long mno;
 
-    @OneToMany(mappedBy = "userId")
+
     private String id;
 
     private String pw;
