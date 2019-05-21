@@ -2,13 +2,11 @@ package com.dev.portfolio.model.entity;
 /*
 회원정보
  */
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Data
+@Entity @Setter @Getter
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "tbl_member")
 public class MemberEntity {

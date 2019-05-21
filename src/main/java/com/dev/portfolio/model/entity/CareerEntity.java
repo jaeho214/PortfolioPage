@@ -1,16 +1,15 @@
 package com.dev.portfolio.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 /*
 경력사항 기입
  */
-@Entity @Data
+@Entity @Setter @Getter
 @NoArgsConstructor @AllArgsConstructor
+@Table(name = "tbl_career")
 public class CareerEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

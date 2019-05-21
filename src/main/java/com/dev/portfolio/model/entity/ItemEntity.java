@@ -3,15 +3,13 @@ package com.dev.portfolio.model.entity;
 작성된 항목들을 선택하여 자기소개서 생성(수정가능) 작성된 항목들 모아서 하나의 자소서로 만들기
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Data @Builder
+@Entity @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
+@Table(name = "tbl_item")
 public class ItemEntity {
 
     @Id

@@ -1,8 +1,6 @@
 package com.dev.portfolio.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,8 +8,9 @@ import javax.persistence.*;
 자격증 및 특기사항 기입
  */
 
-@Entity @Data
+@Entity @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
+@Table(name = "tbl_certificate")
 public class CertificateEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
