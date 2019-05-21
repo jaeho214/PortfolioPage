@@ -3,14 +3,13 @@ package com.dev.portfolio.model.entity;
 학력사항 정보 기입
  */
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Data
+@Entity @Setter @Getter
 @NoArgsConstructor @AllArgsConstructor
+@Table(name = "tbl_education")
 public class EducationEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
