@@ -1,5 +1,6 @@
 package com.dev.portfolio.model.entity;
 
+import com.dev.portfolio.model.dto.CareerDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,4 +25,6 @@ public class CareerEntity {
     private String department; //담당부서
     private String details; //업무 내용
     private String reason; // 퇴사사유
+
+    //public void updateCareer(CareerDto .)
 }
