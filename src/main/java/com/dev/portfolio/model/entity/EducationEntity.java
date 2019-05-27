@@ -8,7 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Setter @Getter
+@Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_education")
 public class EducationEntity {

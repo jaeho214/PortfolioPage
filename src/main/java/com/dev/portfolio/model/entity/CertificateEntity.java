@@ -9,7 +9,7 @@ import javax.persistence.*;
 자격증 및 특기사항 기입
  */
 
-@Entity @Setter @Getter
+@Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_certificate")
 public class CertificateEntity {
@@ -22,22 +22,22 @@ public class CertificateEntity {
     private MemberEntity member; //사용자 구분을 위한 사용자 id
 
     private String certification; // 자격사항
-    private String getDate; //취득일자
+    private String date; //취득일자
     private String organization; // 발급기관
     private String uri;// 사본 이미지 경로
 
     @Builder
-    public CertificateEntity(MemberEntity memberEntity, String certification, String getDate, String organization, String uri){
+    public CertificateEntity(MemberEntity memberEntity, String certification, String date, String organization, String uri){
         this.member = memberEntity;
         this.certification = certification;
-        this.getDate = getDate;
+        this.date = date;
         this.organization = organization;
         this.uri = uri;
     }
 
     public void updateCertificate(CertificateDto certificateDto){
         this.certification = certificateDto.getCertification();
-        this.getDate = certificateDto.getGetDate();
+        this.date = certificateDto.getDate();
         this.organization = certificateDto.getOrganization();
         this.uri = certificateDto.getUri();
     }
