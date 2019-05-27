@@ -10,7 +10,7 @@ import java.lang.reflect.Member;
 경력사항 기입
  */
 @Entity
-@Setter @Getter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_career")
 public class CareerEntity {
