@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://117.17.142.207:3306/portfolio?serverTimezone=UTC
-    username: kimhw
+    url: jdbc:mysql://jaehodb.cmokv5cfhdtd.us-east-2.rds.amazonaws.com:3306/portfolio?serverTimezone=UTC
+    username: portfolio
     password: portfolio
   jpa:
     hibernate:
