@@ -9,12 +9,12 @@ import com.dev.portfolio.service.CertificateService;
 import com.dev.portfolio.service.ContentsService;
 import com.dev.portfolio.service.EducationService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/portfolio/main")
 @AllArgsConstructor
 public class MainController {
 
