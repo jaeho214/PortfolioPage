@@ -24,5 +24,10 @@ public class MemberController {
         return memberService.signUp(memberDto);
     }
 
+    @ApiOperation("로그인")
+    @PostMapping
+    public String signIn(@RequestBody MemberDto memberDto){
+        return memberService.signIn(memberDto);
+    }
 
 }
