@@ -9,14 +9,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity @Setter @Getter
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tbl_member")
 public class MemberEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long mno;
-
-
     private String id;
 
     private String pw;
@@ -28,9 +24,9 @@ public class MemberEntity {
     private String sex;
     private String uri;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="member")
-    private List<MemberRole> roles;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name="member")
+//    private List<MemberRole> roles;
 
     @Builder
     public MemberEntity(String id, String pw, String koName, String enName,

@@ -1,14 +1,15 @@
 package com.dev.portfolio.controller;
 
 import com.dev.portfolio.model.dto.MemberDto;
+import com.dev.portfolio.model.dto.SignInDto;
 import com.dev.portfolio.service.MemberService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/portfolio/sign")
 public class MemberController {
 
@@ -21,13 +22,39 @@ public class MemberController {
     @ApiOperation("회원가입")
     @PostMapping("/signup")
     public String signUp(@RequestBody MemberDto memberDto){
-        return memberService.signUp(memberDto);
+        memberService.signUp(memberDto);
+        return "회원가입";
     }
 
     @ApiOperation("로그인")
     @PostMapping
-    public String signIn(@RequestBody MemberDto memberDto){
-        return memberService.signIn(memberDto);
+    public String signIn(@RequestBody SignInDto signInDto){
+        memberService.signIn(signInDto);
+        return "로그인";
+    }
+
+    @ApiOperation("회원 정보 수정")
+    @PutMapping
+    public void update(@RequestBody MemberDto memberDto){
+        memberService.update(memberDto);
+    }
+
+    @ApiOperation("회원 탈퇴")
+    @DeleteMapping
+    public void delete(@RequestBody SignInDto signInDto){
+        memberService.delete(signInDto);
+    }
+
+    @ApiOperation("회원 정보 조회")
+    @GetMapping("/info")
+    public MemberDto getMember(@RequestBody MemberDto memberDto){ // 토큰 방식을로 바꿔야 한다~
+        return memberService.getMemberInfo(memberDto);
+    }
+
+    @ApiOperation("전체 회원 정보 조회")
+    @GetMapping("/manageMember")
+    public List<MemberDto> getAllMembers(){
+        return memberService.getAllMembersInfo();
     }
 
 }
