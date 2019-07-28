@@ -8,6 +8,7 @@ import com.dev.portfolio.model.dto.CareerDto;
 import com.dev.portfolio.model.entity.CareerEntity;
 import com.dev.portfolio.repository.CareerRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Log
 public class CareerService {
 
     private CareerRepository careerRepository;
@@ -48,6 +50,7 @@ public class CareerService {
 
     //경력을 수정하는 메소드
     public void updateCareer(CareerDto careerDto){
+        log.info("---경력 수정---");
         CareerEntity careerEntity = careerRepository.findCareerEntityByCareerNo(careerDto.getCareerNo());
         careerEntity.updateCareer(careerDto);
         careerRepository.save(careerEntity);
