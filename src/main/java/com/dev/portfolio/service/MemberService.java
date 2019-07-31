@@ -7,8 +7,7 @@ package com.dev.portfolio.service;
 import com.dev.portfolio.exception.UserDefineException;
 import com.dev.portfolio.model.dto.MemberDto;
 import com.dev.portfolio.model.dto.SignInDto;
-import com.dev.portfolio.model.entity.MemberEntity;
-import com.dev.portfolio.model.entity.MemberRole;
+import com.dev.portfolio.model.entity.Member;
 import com.dev.portfolio.repository.MemberRepository;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +19,6 @@ import com.dev.portfolio.repository.MemberRepository;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class MemberService {//implements UserDetailsService {
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        MemberEntity member = memberRepository.findById(username)
+//        Member member = memberRepository.findById(username)
 //                .orElseThrow(()-> new UserDefineException(username));
 //        return new User(member.getId(), member.getPw(), makeGrantedAuthority(member.getRoles()));
 //    }
@@ -56,7 +54,7 @@ public class MemberService {//implements UserDetailsService {
         if(memberRepository.findById(memberDto.getId()).isPresent())
             throw new UserDefineException("아이디가 중복됩니다.");
 
-        MemberEntity member = memberDto.toEntity();
+        Member member = memberDto.toEntity();
 //        member.setPw(passwordEncoder.encode(member.getPw()));
 
         memberRepository.save(member);
@@ -66,7 +64,7 @@ public class MemberService {//implements UserDetailsService {
     public void signIn(SignInDto signInDto){
         log.info("----login---- " + signInDto.getId() + " " + signInDto.getPw());
 
-        MemberEntity member = memberRepository.findById(signInDto.getId()).orElseThrow(() -> new UserDefineException("아이디를 잘못 입력하였습니다."));
+        Member member = memberRepository.findById(signInDto.getId()).orElseThrow(() -> new UserDefineException("아이디를 잘못 입력하였습니다."));
 
 //        if(!passwordEncoder.matches(memberDto.getPw(),member.getPw())) {
 //            throw new UserDefineException("비밀번호를 잘못 입력하셨습니다.");
@@ -83,7 +81,7 @@ public class MemberService {//implements UserDetailsService {
     }
 
     public MemberDto getMemberInfo(MemberDto memberDto){
-        MemberEntity member = memberRepository.findById(memberDto.getId()).orElseThrow(() -> new UserDefineException("조회할 수 없음"));
+        Member member = memberRepository.findById(memberDto.getId()).orElseThrow(() -> new UserDefineException("조회할 수 없음"));
 
         return MemberDto.builder()
                 .koName(member.getKoName())
@@ -97,7 +95,7 @@ public class MemberService {//implements UserDetailsService {
 
 
     public List<MemberDto> getAllMembersInfo() {
-        List<MemberEntity> membersList = memberRepository.findAll();
+        List<Member> membersList = memberRepository.findAll();
         List<MemberDto> memberDtos = new ArrayList<>();
 
         membersList.forEach(member -> {

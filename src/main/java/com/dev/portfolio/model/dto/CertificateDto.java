@@ -1,7 +1,7 @@
 package com.dev.portfolio.model.dto;
 
-import com.dev.portfolio.model.entity.CertificateEntity;
-import com.dev.portfolio.model.entity.MemberEntity;
+import com.dev.portfolio.model.entity.Certificate;
+import com.dev.portfolio.model.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CertificateDto {
     private Long certiNo; // PK
-    private MemberEntity member; //사용자 구분을 위한 사용자 id
+    private Member member; //사용자 구분을 위한 사용자 id
     private String certification; // 자격사항
     private String date; //취득일자
     private String organization; // 발급기관
@@ -24,9 +24,9 @@ public class CertificateDto {
         this.uri = uri;
     }
 
-    public CertificateEntity toEntity(){
-        return CertificateEntity.builder()
-                .memberEntity(member)
+    public Certificate toEntity(){
+        return Certificate.builder()
+                .member(member)
                 .certification(certification)
                 .date(date)
                 .organization(organization)

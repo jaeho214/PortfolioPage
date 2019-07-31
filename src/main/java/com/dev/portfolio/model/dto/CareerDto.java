@@ -1,7 +1,7 @@
 package com.dev.portfolio.model.dto;
 
-import com.dev.portfolio.model.entity.CareerEntity;
-import com.dev.portfolio.model.entity.MemberEntity;
+import com.dev.portfolio.model.entity.Career;
+import com.dev.portfolio.model.entity.Member;
 import lombok.*;
 
 @Getter
@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CareerDto {
     private Long careerNo;
-    private MemberEntity member; //사용자 구분을 위한 사용자 id
+    private Member member; //사용자 구분을 위한 사용자 id
 
     private String company; //회사명
     private String term; //기관
@@ -26,9 +26,9 @@ public class CareerDto {
         this.reason = reason;
     }
 
-    public CareerEntity toEntity(){
-        return CareerEntity.builder()
-                .memberEntity(member)
+    public Career toEntity(){
+        return Career.builder()
+                .member(member)
                 .company(company)
                 .term(term)
                 .department(department)

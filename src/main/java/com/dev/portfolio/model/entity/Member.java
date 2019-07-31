@@ -11,7 +11,7 @@ import java.util.List;
 @Entity @Setter @Getter
 @NoArgsConstructor
 @Table(name = "tbl_member")
-public class MemberEntity {
+public class Member {
     @Id
     private String id;
 
@@ -29,8 +29,8 @@ public class MemberEntity {
 //    private List<MemberRole> roles;
 
     @Builder
-    public MemberEntity(String id, String pw, String koName, String enName,
-                        String phoneNum, String socialNum, String email,String sex, String uri){
+    public Member(String id, String pw, String koName, String enName,
+                  String phoneNum, String socialNum, String email, String sex, String uri){
         this.id = id;
         this.pw = pw;
         this.koName = koName;

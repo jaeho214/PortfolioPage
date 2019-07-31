@@ -8,9 +8,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity @Setter @Getter
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor
 @Table(name = "tbl_item")
-public class ItemEntity {
+public class Item {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -18,8 +18,16 @@ public class ItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private MemberEntity member;
+    private Member member;
 
     private String title;
+
+    @Builder
+    public Item(Long ino, Member member, String title){
+        this.ino = ino;
+        this.member = member;
+        this.title = title;
+    }
+
 
 }

@@ -5,7 +5,7 @@ package com.dev.portfolio.service;
  */
 
 import com.dev.portfolio.model.dto.CertificateDto;
-import com.dev.portfolio.model.entity.CertificateEntity;
+import com.dev.portfolio.model.entity.Certificate;
 import com.dev.portfolio.repository.CertificateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class CertificateService {
     //모든 자격사항의 모든 내용을 가져오는 메소드
     public List<CertificateDto> getCertificates(){
         List<CertificateDto> certificateDtoList = new ArrayList<>();
-        List<CertificateEntity> certificates = certificateRepository.findAll();
+        List<Certificate> certificates = certificateRepository.findAll();
         certificates.forEach((certificate) -> {
             certificateDtoList.add(
                     CertificateDto.builder()
@@ -45,13 +45,13 @@ public class CertificateService {
 
     //자격사항을 수정하는 메소드
     public void updateCertificate(CertificateDto certificateDto){
-        CertificateEntity certificateEntity = certificateRepository.findCertificateEntityByCertiNo(certificateDto.getCertiNo());
-        certificateEntity.updateCertificate(certificateDto);
-        certificateRepository.save(certificateEntity);
+        Certificate certificate = certificateRepository.findCertificateEntityByCertiNo(certificateDto.getCertiNo());
+        certificate.updateCertificate(certificateDto);
+        certificateRepository.save(certificate);
     }
 
     public void deleteCertificate(Long certiNo){
-        CertificateEntity certificateEntity = certificateRepository.findCertificateEntityByCertiNo(certiNo);
-        certificateRepository.delete(certificateEntity);
+        Certificate certificate = certificateRepository.findCertificateEntityByCertiNo(certiNo);
+        certificateRepository.delete(certificate);
     }
 }
