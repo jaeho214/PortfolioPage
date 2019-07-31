@@ -4,7 +4,6 @@ import com.dev.portfolio.model.dto.CareerDto;
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 
 /*
 경력사항 기입
@@ -13,14 +12,14 @@ import java.lang.reflect.Member;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
         @Table(name = "tbl_career")
-        public class CareerEntity {
+        public class Career {
             @Id
             @GeneratedValue(strategy= GenerationType.IDENTITY)
             private Long careerNo; // PK
 
             @ManyToOne
             @JoinColumn(name = "userId")
-            private MemberEntity member; //사용자 구분을 위한 사용자 id
+            private Member member; //사용자 구분을 위한 사용자 id
 
             private String company; //회사명
             private String term; //기관
@@ -29,8 +28,8 @@ import java.lang.reflect.Member;
             private String reason; // 퇴사사유
 
             @Builder
-            public CareerEntity(MemberEntity memberEntity, String company, String term, String department, String details, String reason){
-                this.member = memberEntity;
+            public Career(Member member, String company, String term, String department, String details, String reason){
+                this.member = member;
                 this.company = company;
                 this.term = term;
                 this.department = department;

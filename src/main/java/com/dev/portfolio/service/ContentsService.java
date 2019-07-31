@@ -5,7 +5,8 @@ package com.dev.portfolio.service;
  */
 
 import com.dev.portfolio.model.dto.ContentsDto;
-import com.dev.portfolio.model.entity.ContentsEntity;
+import com.dev.portfolio.model.dto.ContentsInItemDto;
+import com.dev.portfolio.model.entity.Contents;
 import com.dev.portfolio.repository.ContentsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ContentsService {
 
     public List<ContentsDto> getContents(){
         List<ContentsDto> contentsDtoList = new ArrayList<>();
-        List<ContentsEntity> contents = contentsRepository.findAll();
+        List<Contents> contents = contentsRepository.findAll();
         contents.forEach((content) -> {
             contentsDtoList.add(
                     ContentsDto.builder()
@@ -40,14 +41,14 @@ public class ContentsService {
 
     //자기소개서를 수정하는 메소드
     public void updateContents(ContentsDto contentsDto){
-        ContentsEntity contentsEntity = contentsRepository.findContentsEntityByContentNo(contentsDto.getContentNo());
-        contentsEntity.updateContents(contentsDto);
-        contentsRepository.save(contentsEntity);
+        Contents contents = contentsRepository.findContentsByContentNo(contentsDto.getContentNo());
+        contents.updateContents(contentsDto);
+        contentsRepository.save(contents);
     }
 
     //자기소개서를 삭제하는 메소드
     public void deleteContents(Long contentsNo){
-        ContentsEntity contentsEntity = contentsRepository.findContentsEntityByContentNo(contentsNo);
-        contentsRepository.delete(contentsEntity);
+        Contents contents = contentsRepository.findContentsByContentNo(contentsNo);
+        contentsRepository.delete(contents);
     }
 }

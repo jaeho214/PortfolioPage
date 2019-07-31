@@ -5,7 +5,7 @@ package com.dev.portfolio.service;
  */
 
 import com.dev.portfolio.model.dto.EducationDto;
-import com.dev.portfolio.model.entity.EducationEntity;
+import com.dev.portfolio.model.entity.Education;
 import com.dev.portfolio.repository.EducationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class EducationService {
     //모든 학력의 모든 내용을 가져오는 메소드
     public List<EducationDto> getEducations(){
         List<EducationDto> educationDtoList = new ArrayList<>();
-        List<EducationEntity> educations = educationRepository.findAll();
+        List<Education> educations = educationRepository.findAll();
         educations.forEach((education) -> {
             educationDtoList.add(
                     EducationDto.builder()
@@ -44,13 +44,13 @@ public class EducationService {
 
     //학력을 수정하는 메소드
     public void updateEducation(EducationDto educationDto){
-        EducationEntity educationEntity = educationRepository.findEducationEntityByEno(educationDto.getEno());
-        educationEntity.updateEducation(educationDto);
-        educationRepository.save(educationEntity);
+        Education education = educationRepository.findEducationEntityByEno(educationDto.getEno());
+        education.updateEducation(educationDto);
+        educationRepository.save(education);
     }
 
     public void deleteEducation(Long eno){
-        EducationEntity educationEntity = educationRepository.findEducationEntityByEno(eno);
-        educationRepository.delete(educationEntity);
+        Education education = educationRepository.findEducationEntityByEno(eno);
+        educationRepository.delete(education);
     }
 }

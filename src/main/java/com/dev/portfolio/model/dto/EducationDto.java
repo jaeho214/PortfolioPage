@@ -1,14 +1,14 @@
 package com.dev.portfolio.model.dto;
 
-import com.dev.portfolio.model.entity.EducationEntity;
-import com.dev.portfolio.model.entity.MemberEntity;
+import com.dev.portfolio.model.entity.Education;
+import com.dev.portfolio.model.entity.Member;
 import lombok.*;
 
 @Getter
 @AllArgsConstructor
 public class EducationDto {
     private Long eno; // PK
-    private MemberEntity member; //사용자 구분을 위한 사용자 id
+    private Member member; //사용자 구분을 위한 사용자 id
 
     private String term; // 기간
     private String organ; // 학교명
@@ -25,9 +25,9 @@ public class EducationDto {
         this.note = note;
     }
 
-    public EducationEntity toEntity(){
-        return EducationEntity.builder()
-                .memberEntity(member)
+    public Education toEntity(){
+        return Education.builder()
+                .member(member)
                 .term(term)
                 .organ(organ)
                 .major(major)

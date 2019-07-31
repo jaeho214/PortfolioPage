@@ -11,14 +11,14 @@ import javax.persistence.*;
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_education")
-public class EducationEntity {
+public class Education {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long eno; // PK
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private MemberEntity member; //사용자 구분을 위한 사용자 id
+    private Member member; //사용자 구분을 위한 사용자 id
 
     private String term; // 기간
     private String organ; // 학교명
@@ -27,8 +27,8 @@ public class EducationEntity {
     private String note; // 비고
 
     @Builder
-    public EducationEntity(MemberEntity memberEntity, String term, String organ, String major, String grade, String note){
-        this.member = memberEntity;
+    public Education(Member member, String term, String organ, String major, String grade, String note){
+        this.member = member;
         this.term = term;
         this.organ = organ;
         this.major = major;

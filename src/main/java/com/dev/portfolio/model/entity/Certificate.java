@@ -12,14 +12,14 @@ import javax.persistence.*;
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_certificate")
-public class CertificateEntity {
+public class Certificate {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long certiNo; // PK
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private MemberEntity member; //사용자 구분을 위한 사용자 id
+    private Member member; //사용자 구분을 위한 사용자 id
 
     private String certification; // 자격사항
     private String date; //취득일자
@@ -27,8 +27,8 @@ public class CertificateEntity {
     private String uri;// 사본 이미지 경로
 
     @Builder
-    public CertificateEntity(MemberEntity memberEntity, String certification, String date, String organization, String uri){
-        this.member = memberEntity;
+    public Certificate(Member member, String certification, String date, String organization, String uri){
+        this.member = member;
         this.certification = certification;
         this.date = date;
         this.organization = organization;
