@@ -24,9 +24,9 @@ public class Member {
     private String sex;
     private String uri;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name="member")
-//    private List<MemberRole> roles;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="member")
+    private List<MemberRole> roles;
 
     @Builder
     public Member(String id, String pw, String koName, String enName,

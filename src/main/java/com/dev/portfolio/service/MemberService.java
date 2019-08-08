@@ -8,15 +8,11 @@ import com.dev.portfolio.exception.UserDefineException;
 import com.dev.portfolio.model.dto.MemberDto;
 import com.dev.portfolio.model.dto.SignInDto;
 import com.dev.portfolio.model.entity.Member;
+import com.dev.portfolio.model.entity.MemberRole;
 import com.dev.portfolio.repository.MemberRepository;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import com.dev.portfolio.security.JwtProvider;
 import lombok.extern.java.Log;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,51 +20,53 @@ import java.util.List;
 
 @Service
 @Log
-public class MemberService {//implements UserDetailsService {
+public class MemberService{
     private final MemberRepository memberRepository;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
-    public MemberService(MemberRepository memberRepository){//, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
         this.memberRepository = memberRepository;
-        //this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtProvider = jwtProvider;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Member member = memberRepository.findById(username)
-//                .orElseThrow(()-> new UserDefineException(username));
-//        return new User(member.getId(), member.getPw(), makeGrantedAuthority(member.getRoles()));
-//    }
-//
-//    private List<GrantedAuthority> makeGrantedAuthority(List<MemberRole> roles){
-//        List<GrantedAuthority> list = new ArrayList<>();
-//        roles.forEach(
-//                role -> list.add(
-//                        new SimpleGrantedAuthority("ROLE_" + role.getRoleName())
-//                )
-//        );
-//        return list;
-//    }
-
-    public void signUp(MemberDto memberDto){ //회원 가입
+    public String signUp(MemberDto memberDto, String role){ //회원 가입
         if(memberRepository.findById(memberDto.getId()).isPresent())
             throw new UserDefineException("아이디가 중복됩니다.");
 
         Member member = memberDto.toEntity();
-//        member.setPw(passwordEncoder.encode(member.getPw()));
+        member.setPw(passwordEncoder.encode(member.getPw()));
+
+        if(role.equals("ADMIN")){
+            List<MemberRole> list = new ArrayList<>();
+            MemberRole admin = new MemberRole("ADMIN");
+            MemberRole user = new MemberRole("USER");
+            list.add(admin);
+            list.add(user);
+            member.setRoles(list);
+        }else{
+            List<MemberRole> list = new ArrayList<>();
+            MemberRole user = new MemberRole("USER");
+            list.add(user);
+            member.setRoles(list);
+        }
 
         memberRepository.save(member);
 
+        return jwtProvider.createToken(member.getId(),member.getRoles());
     }
 
-    public void signIn(SignInDto signInDto){
+    public String signIn(SignInDto signInDto){
         log.info("----login---- " + signInDto.getId() + " " + signInDto.getPw());
 
         Member member = memberRepository.findById(signInDto.getId()).orElseThrow(() -> new UserDefineException("아이디를 잘못 입력하였습니다."));
 
-//        if(!passwordEncoder.matches(memberDto.getPw(),member.getPw())) {
-//            throw new UserDefineException("비밀번호를 잘못 입력하셨습니다.");
-//        }
+        if(!passwordEncoder.matches(signInDto.getPw(),member.getPw())) {
+            throw new UserDefineException("비밀번호를 잘못 입력하셨습니다.");
+        }
+
+        return jwtProvider.createToken(member.getId(), member.getRoles());
     }
 
     public void update(MemberDto memberDto){

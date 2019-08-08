@@ -1,6 +1,5 @@
 package com.dev.portfolio.model.dto;
 
-import com.dev.portfolio.model.entity.Contents;
 import com.dev.portfolio.model.entity.ContentsInItem;
 import com.dev.portfolio.model.entity.Item;
 import com.dev.portfolio.model.entity.Member;

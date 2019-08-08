@@ -2,8 +2,10 @@ package com.dev.portfolio.controller;
 
 import com.dev.portfolio.model.dto.MemberDto;
 import com.dev.portfolio.model.dto.SignInDto;
+import com.dev.portfolio.security.JwtProvider;
 import com.dev.portfolio.service.MemberService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +21,16 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @ApiOperation("회원가입")
-    @PostMapping("/signup")
-    public String signUp(@RequestBody MemberDto memberDto){
-        memberService.signUp(memberDto);
-        return "회원가입";
+    @ApiOperation("관리자 회원가입")
+    @PostMapping("/admin")
+    public String signUpAdmin(@RequestBody MemberDto memberDto){
+        return memberService.signUp(memberDto, "ADMIN");
+    }
+
+    @ApiOperation("일반 회원 회원가입")
+    @PostMapping("/user")
+    public String signUpUser(@RequestBody MemberDto memberDto){
+        return memberService.signUp(memberDto, "USER");
     }
 
     @ApiOperation("로그인")

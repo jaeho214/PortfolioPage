@@ -8,6 +8,7 @@ package com.dev.portfolio.service;
 import com.dev.portfolio.model.dto.ContentsDto;
 import com.dev.portfolio.model.dto.ContentsInItemDto;
 import com.dev.portfolio.model.dto.ItemDto;
+import com.dev.portfolio.model.entity.Item;
 import com.dev.portfolio.model.entity.Member;
 import com.dev.portfolio.repository.ContentsInItemRepository;
 import com.dev.portfolio.repository.ItemRepository;
@@ -54,21 +55,22 @@ public class ItemService {
         List<ContentsInItemDto> contentsInItemList = new ArrayList<>();
         Member member = new Member();
         member.setId(user_id);
+        Item item = itemDto.toEntity(); // 다른 객체가 리턴되어서 자꾸 다른 Item으로 들어갔던 것임
         contentsDto.forEach((contents) -> {
             contentsInItemList.add(
                     ContentsInItemDto.builder()
                             .category(contents.getCategory())
                             .content(contents.getContent())
                             .member(member)
-                            .item(itemDto.toEntity())
+                            .item(item)
                             .build()
             );
         });
+        itemRepository.save(item);
+
         contentsInItemList.forEach((contents) -> {
             contentsInItemRepository.save(contents.toEntity());
         });
-        //itemRepository.save(itemDto.toEntity());
-
     }
 
 //    public void makeItem(String user_id, List<ContentsInItemDto> contentsInItemDtos, String title) {
