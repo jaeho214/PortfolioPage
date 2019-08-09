@@ -1,5 +1,12 @@
 package com.dev.portfolio.security;
 
+/*
+    로그인 되어있지 않은 사용자가 접근했을 때 login.jsp를 자동적으로 띄우게 되어있다
+    하지만 Restful 방식에서는 view를 제공해주지 않기 때문에 login화면을 띄울 수 있도록 http통신으로 에러 코드를 보내게 커스텀
+ */
+
+
+
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -9,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class HttpAuthenticationEntryPoint extends BasicAuthenticationEntryPoint { //로그인 되어있지 않은 사용자가 접근했을 때 login 창을 바로 띄우지 않고 API 통신
+public class HttpAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException{
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");

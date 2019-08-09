@@ -1,5 +1,8 @@
 package com.dev.portfolio.security;
 
+/*
+    권한이 없다면 접근이 불가하다는 의미로 에러코드를 보내줌
+ */
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,11 @@
 package com.dev.portfolio.security;
 
+/*
+    시큐리티가 시작 전에 실행이 되도록 만들어놓은 Filter
+    토큰을 확인하여 유효함을 확인하고 시큐리티에 권한 세팅
+ */
+
+
 import io.jsonwebtoken.JwtException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
