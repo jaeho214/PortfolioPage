@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/portfolio/main/career")
 public class CareerController {
     private CareerService careerService;
@@ -21,24 +20,26 @@ public class CareerController {
     //경력 사항
     @ApiOperation("경력 조회")
     @GetMapping
-    public List<CareerDto> getCareers(){
-        return careerService.getCareers();
+    public List<CareerDto> getCareers(@RequestHeader(name = "Authorization") String token){
+        return careerService.getCareers(token);
     }
 
     @ApiOperation("경력 추가")
     @PostMapping
-    public void saveCareer(@RequestBody CareerDto careerDto){
-        careerService.saveCareer(careerDto);
+    public void saveCareer(@RequestHeader(name = "Authorization") String token, @RequestBody CareerDto careerDto){
+        careerService.saveCareer(token, careerDto);
     }
 
     @ApiOperation("경력 수정")
     @PutMapping
-    public void updateCareer(@RequestBody CareerDto careerDto){
-        careerService.updateCareer(careerDto);
+    public void updateCareer(@RequestHeader(name = "Authorization") String token, @RequestBody CareerDto careerDto){
+        careerService.updateCareer(token, careerDto);
     }
 
     @ApiOperation("경력 삭제")
     @DeleteMapping("/{careerNo}")
-    public void deleteCareer(@PathVariable Long careerNo) { careerService.deleteCareer(careerNo);}
+    public void deleteCareer(@RequestHeader(name = "Authorization") String token, @PathVariable Long careerNo) {
+        careerService.deleteCareer(token, careerNo);
+    }
 
 }

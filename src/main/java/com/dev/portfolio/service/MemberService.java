@@ -32,6 +32,7 @@ public class MemberService{
     }
 
     public String signUp(MemberDto memberDto, String role){ //회원 가입
+        log.info(memberDto.getId() + "님의 회원가입 시도");
         if(memberRepository.findById(memberDto.getId()).isPresent())
             throw new UserDefineException("아이디가 중복됩니다.");
 

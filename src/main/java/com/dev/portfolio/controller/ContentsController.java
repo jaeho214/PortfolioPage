@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/portfolio/main/contents")
 public class ContentsController {
     private ContentsService contentsService;
@@ -20,25 +19,27 @@ public class ContentsController {
     //자기소개서
     @ApiOperation("자기소개서 항목들 조회")
     @GetMapping
-    public List<ContentsDto> getContents(){
-        return contentsService.getContents();
+    public List<ContentsDto> getContents(@RequestHeader(name = "Authorization") String token){
+        return contentsService.getContents(token);
     }
 
     @ApiOperation("자기소개서 항목 추가")
     @PostMapping
-    public void saveContents(@RequestBody ContentsDto contentsDto){
-        contentsService.saveContents(contentsDto);
+    public void saveContents(@RequestHeader(name = "Authorization") String token, @RequestBody ContentsDto contentsDto){
+        contentsService.saveContents(token, contentsDto);
     }
 
     @ApiOperation("자기소개서 항목 변경")
     @PutMapping
-    public void updateContents(@RequestBody ContentsDto contentsDto){
-        contentsService.updateContents(contentsDto);
+    public void updateContents(@RequestHeader(name = "Authorization") String token, @RequestBody ContentsDto contentsDto){
+        contentsService.updateContents(token, contentsDto);
     }
 
     @ApiOperation("자기소개서 항목 삭제")
     @DeleteMapping
-    public void deleteContents(@RequestBody ContentsDto contentsDto) { contentsService.deleteContents(contentsDto.getContentNo());}
+    public void deleteContents(@RequestHeader(name = "Authorization") String token, @RequestBody ContentsDto contentsDto) {
+        contentsService.deleteContents(token, contentsDto.getContentNo());
+    }
 
 
 }

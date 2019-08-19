@@ -2,12 +2,10 @@ package com.dev.portfolio.model.dto;
 
 import com.dev.portfolio.model.entity.Contents;
 import com.dev.portfolio.model.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContentsDto {

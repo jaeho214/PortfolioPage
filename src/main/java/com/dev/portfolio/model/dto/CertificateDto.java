@@ -5,8 +5,10 @@ import com.dev.portfolio.model.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class CertificateDto {
     private Long certiNo; // PK

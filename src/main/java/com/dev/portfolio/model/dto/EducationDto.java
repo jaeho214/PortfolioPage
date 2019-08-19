@@ -5,6 +5,7 @@ import com.dev.portfolio.model.entity.Member;
 import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class EducationDto {
     private Long eno; // PK

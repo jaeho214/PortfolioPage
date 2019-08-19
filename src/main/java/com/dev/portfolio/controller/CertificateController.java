@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/portfolio/main/certificate")
 public class CertificateController {
     private CertificateService certificateService;
@@ -21,26 +20,26 @@ public class CertificateController {
     // 자격 사항
     @ApiOperation("자격증 조회")
     @GetMapping
-    public List<CertificateDto> getCertificates(){
-        return certificateService.getCertificates();
+    public List<CertificateDto> getCertificates(@RequestHeader(name = "Authorization") String token){
+        return certificateService.getCertificates(token);
     }
 
     @ApiOperation("자격증 추가")
     @PostMapping
-    public void saveCertificate(@RequestBody CertificateDto certificateDto){
-        certificateService.saveCertificate(certificateDto);
+    public void saveCertificate(@RequestHeader(name = "Authorization") String token, @RequestBody CertificateDto certificateDto){
+        certificateService.saveCertificate(token, certificateDto);
     }
 
     @ApiOperation("자격증 수정")
     @PutMapping
-    public void updateCertificate(@RequestBody CertificateDto certificateDto){
-        certificateService.updateCertificate(certificateDto);
+    public void updateCertificate(@RequestHeader(name = "Authorization") String token, @RequestBody CertificateDto certificateDto){
+        certificateService.updateCertificate(token, certificateDto);
     }
 
     @ApiOperation("자격증 삭제")
     @DeleteMapping("/{certificateNo}")
-    public void deleteCertificate(@PathVariable Long certificateNo){
-        certificateService.deleteCertificate(certificateNo);
+    public void deleteCertificate(@RequestHeader(name = "Authorization") String token, @PathVariable Long certificateNo){
+        certificateService.deleteCertificate(token, certificateNo);
     }
 
 }

@@ -27,34 +27,34 @@ public class ItemService {
         this.contentsInItemRepository = contentsInItemRepository;
     }
 
-    public List<ItemDto> getItems(String user_id){
-        return itemRepository.getItems(user_id);
+    public List<ItemDto> getItems(String userId){
+        return itemRepository.getItems(userId);
     }
 
-    public List<ContentsInItemDto> getContentsInItem(String user_id, Long item_no) {
-        return itemRepository.getContentsInItem(user_id,item_no);
+    public List<ContentsInItemDto> getContentsInItem(String userId, Long item_no) {
+        return itemRepository.getContentsInItem(userId,item_no);
     }
 
-    public void deleteContentsInItem(String user_id, Long item_no, Long contents_no) {
-        itemRepository.deleteContentsInItem(user_id,item_no,contents_no);
+    public void deleteContentsInItem(String userId, Long item_no, Long contents_no) {
+        itemRepository.deleteContentsInItem(userId,item_no,contents_no);
     }
 
-    public String updateItemTitle(String user_id, Long item_no, String title) {
-        return itemRepository.updateItemTitle(user_id, item_no, title);
+    public String updateItemTitle(String userId, Long item_no, String title) {
+        return itemRepository.updateItemTitle(userId, item_no, title);
     }
 
-    public ContentsInItemDto updateContentsInItem(String user_id, Long item_no, Long contents_no, ContentsInItemDto contentsInItemDto) {
-        return itemRepository.updateContentsInItem(user_id,item_no,contents_no,contentsInItemDto);
+    public ContentsInItemDto updateContentsInItem(String userId, Long item_no, Long contents_no, ContentsInItemDto contentsInItemDto) {
+        return itemRepository.updateContentsInItem(userId,item_no,contents_no,contentsInItemDto);
     }
 
-    public void deleteItem(String user_id, Long item_no) {
-        itemRepository.deleteItem(user_id,item_no);
+    public void deleteItem(String userId, Long item_no) {
+        itemRepository.deleteItem(userId,item_no);
     }
 
-    public void makeItem(String user_id, ItemDto itemDto, List<ContentsDto> contentsDto) {
+    public void makeItem(String userId, ItemDto itemDto, List<ContentsDto> contentsDto) {
         List<ContentsInItemDto> contentsInItemList = new ArrayList<>();
         Member member = new Member();
-        member.setId(user_id);
+        member.setId(userId);
         Item item = itemDto.toEntity(); // 다른 객체가 리턴되어서 자꾸 다른 Item으로 들어갔던 것임
         contentsDto.forEach((contents) -> {
             contentsInItemList.add(

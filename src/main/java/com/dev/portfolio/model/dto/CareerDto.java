@@ -5,6 +5,7 @@ import com.dev.portfolio.model.entity.Member;
 import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CareerDto {
