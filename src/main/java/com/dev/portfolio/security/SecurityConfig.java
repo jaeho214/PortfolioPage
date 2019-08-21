@@ -70,11 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                         //.antMatchers(HttpMethod.OPTIONS,"/oauth/token").permitAll()
-                        .antMatchers("portfolio/sign/admin").hasRole("ADMIN")
                         .antMatchers("/portfolio/sign/signup").permitAll()
                         .antMatchers(HttpMethod.PUT, "/portfolio/sign").hasRole("USER")
                         .antMatchers(HttpMethod.DELETE, "/portfolio/sign").hasRole("USER")
-                        .antMatchers("/portfolio/admin/**").hasRole("ADMIN")
+                        .antMatchers("/manageMember").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                     .and()
                         .exceptionHandling().authenticationEntryPoint(httpAuthenticationEntryPoint).accessDeniedHandler(accessDeniedHandlerCustom)
                     .and()
@@ -90,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(AUTH_ARR)
                 .antMatchers(HttpMethod.POST, "/portfolio/sign/user")
+                .antMatchers(HttpMethod.POST, "/portfolio/sign/admin")
                 .antMatchers(HttpMethod.POST, "/portfolio/sign");
 
     }

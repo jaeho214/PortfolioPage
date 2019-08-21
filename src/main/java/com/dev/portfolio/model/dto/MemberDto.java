@@ -20,13 +20,13 @@ public class MemberDto {
     private String email;
     private String sex;
     private String uri;
-    private List<MemberRole> roles;
+    //private List<MemberRole> roles;
 
     public MemberDto(){}
 
     @Builder
     public MemberDto(String id, String pw, String koName, String enName,
-                     String phoneNum, String socialNum, String email,String sex, String uri, List<MemberRole> roles){
+                     String phoneNum, String socialNum, String email,String sex, String uri /*List<MemberRole> roles*/){
         this.id = id;
         this.pw = pw;
         this.koName = koName;
@@ -36,7 +36,7 @@ public class MemberDto {
         this.email = email;
         this.sex = sex;
         this.uri = uri;
-        this.roles = roles;
+        //this.roles = roles;
     }
 
     public Member toEntity() {

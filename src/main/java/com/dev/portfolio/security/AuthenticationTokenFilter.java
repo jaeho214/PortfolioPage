@@ -9,6 +9,7 @@ package com.dev.portfolio.security;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -35,14 +36,16 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
         log.info("=============토큰 검사 필터 실행=============");
 
-        try{
+        try {
             String token = jwtProvider.resolveToken(getAsHttpRequest(request)); // request를 token으로 풀어낸다.
-            log.info(token);
-            if(token != null && jwtProvider.validateToken(token)){ // 토큰이 있고 그 토큰이 유효하다면
-                SecurityContextHolder.getContext().setAuthentication(jwtProvider.getAuthenticationByToken(token)); // Security Context 안에 Authentication(권한)을 세팅
+            log.info(getAsHttpRequest(request).getRequestURL().toString());
+            if (token != null && jwtProvider.validateToken(token)) { // 토큰이 있고 그 토큰이 유효하다면
+                Authentication authentication = jwtProvider.getAuthenticationByToken(token);
+                SecurityContextHolder.getContext().setAuthentication(authentication); // Security Context Holder 안에 Authentication 객체를 세팅
             }
         }catch (JwtException | IllegalArgumentException e){ // 토큰의 유효함에 대해 예외가 발생하면
-            log.error("Expired or valid JWT token");
+            log.error("Expired or invalid JWT token");
+            log.error(e.getMessage());
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpServletResponse.getWriter().write("Expired or invalid JWT token"); // 토큰이 유효하지 않다는 에러 메세지를

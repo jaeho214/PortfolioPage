@@ -32,12 +32,15 @@ public class MemberService{
     }
 
     public String signUp(MemberDto memberDto, String role){ //회원 가입
+        log.info("==========================================");
         log.info(memberDto.getId() + "님의 회원가입 시도");
-        if(memberRepository.findById(memberDto.getId()).isPresent())
+        log.info("==========================================");
+        if(memberRepository.findById(memberDto.getId()) != null)
             throw new UserDefineException("아이디가 중복됩니다.");
 
         Member member = memberDto.toEntity();
         member.setPw(passwordEncoder.encode(member.getPw()));
+
 
         if(role.equals("ADMIN")){
             List<MemberRole> list = new ArrayList<>();
@@ -59,19 +62,26 @@ public class MemberService{
     }
 
     public String signIn(SignInDto signInDto){
-        log.info("----login---- " + signInDto.getId() + " " + signInDto.getPw());
+        log.info("==========================================");
+        log.info(signInDto.getId() + "님의 로그인 시도");
+        log.info("==========================================");
+        Member member = memberRepository.findById(signInDto.getId());
 
-        Member member = memberRepository.findById(signInDto.getId()).orElseThrow(() -> new UserDefineException("아이디를 잘못 입력하였습니다."));
+        if(member == null) {
+            throw new UserDefineException("아이디를 잘못 입력하셨습니다.");
+        }
 
         if(!passwordEncoder.matches(signInDto.getPw(),member.getPw())) {
             throw new UserDefineException("비밀번호를 잘못 입력하셨습니다.");
         }
-
         return jwtProvider.createToken(member.getId(), member.getRoles());
     }
 
-    public void update(MemberDto memberDto){
-        memberRepository.save(memberDto.toEntity());
+    public void update(String userId, MemberDto memberDto){
+
+        Member member = memberRepository.findById(userId);
+        member.updateMember(memberDto);
+        memberRepository.save(member);
     }
 
     public void delete(SignInDto signInDto){
@@ -79,10 +89,16 @@ public class MemberService{
         memberRepository.deleteById(signInDto.getId());
     }
 
-    public MemberDto getMemberInfo(MemberDto memberDto){
-        Member member = memberRepository.findById(memberDto.getId()).orElseThrow(() -> new UserDefineException("조회할 수 없음"));
+    public MemberDto getMemberInfo(String userId){
+
+        Member member = memberRepository.findById(userId);
+
+        if(member == null) {
+            throw new UserDefineException("조회할 수 없음");
+        }
 
         return MemberDto.builder()
+                .id(member.getId())
                 .koName(member.getKoName())
                 .enName(member.getEnName())
                 .phoneNum(member.getPhoneNum())

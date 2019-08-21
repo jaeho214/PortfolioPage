@@ -24,8 +24,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findById(username)
-                .orElseThrow(()-> new UsernameNotFoundException(username)); // 사용자의 아이디를 받아서 그 아이디를 통해 DB에 저장된 데이터들 중에서 사용자의 정보를 찾고 없으면 예외 발생
+        Member member = memberRepository.findById(username);
+
+        if(member == null) {
+            throw new UsernameNotFoundException(username); // 사용자의 아이디를 받아서 그 아이디를 통해 DB에 저장된 데이터들 중에서 사용자의 정보를 찾고 없으면 예외 발생
+        }
         return new User(member.getId(), member.getPw(), makeGrantedAuthority(member.getRoles())); // 있으면 사용자의 아이디, 비밀번호, 권한을 리턴
         //User 클래스가 UserDetails 인터페이스를 구현하는 클래스
     }

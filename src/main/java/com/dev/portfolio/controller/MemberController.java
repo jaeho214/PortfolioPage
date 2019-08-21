@@ -5,6 +5,7 @@ import com.dev.portfolio.model.dto.SignInDto;
 import com.dev.portfolio.security.JwtProvider;
 import com.dev.portfolio.service.MemberService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/portfolio/sign")
+@Slf4j
 public class MemberController {
 
     private MemberService memberService;
+    private JwtProvider jwtProvider;
 
-    public MemberController(MemberService memberService){
+    public MemberController(MemberService memberService, JwtProvider jwtProvider){
         this.memberService = memberService;
+        this.jwtProvider = jwtProvider;
     }
 
     @ApiOperation("관리자 회원가입")
@@ -35,14 +39,15 @@ public class MemberController {
     @ApiOperation("로그인")
     @PostMapping
     public String signIn(@RequestBody SignInDto signInDto){
-        memberService.signIn(signInDto);
-        return "로그인";
+        return memberService.signIn(signInDto);
+
     }
 
     @ApiOperation("회원 정보 수정")
     @PutMapping
-    public void update(@RequestBody MemberDto memberDto){
-        memberService.update(memberDto);
+    public void update(@RequestHeader(name = "Authorization") String token, @RequestBody MemberDto memberDto){
+        String userId = jwtProvider.getUserIdByToken(token);
+        memberService.update(userId, memberDto);
     }
 
     @ApiOperation("회원 탈퇴")
@@ -53,8 +58,13 @@ public class MemberController {
 
     @ApiOperation("회원 정보 조회")
     @GetMapping("/info")
-    public MemberDto getMember(@RequestBody MemberDto memberDto){ // 토큰 방식을로 바꿔야 한다~
-        return memberService.getMemberInfo(memberDto);
+    public MemberDto getMember(@RequestHeader(name = "Authorization") String token){
+        System.out.println(token);
+        String userId = jwtProvider.getUserIdByToken(token);
+        log.info("=============================");
+        log.info(userId + "의 회원 정보 조회");
+        log.info("=============================");
+        return memberService.getMemberInfo(userId);
     }
 
     @ApiOperation("전체 회원 정보 조회")
