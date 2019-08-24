@@ -52,8 +52,9 @@ public class MemberController {
 
     @ApiOperation("회원 탈퇴")
     @DeleteMapping
-    public void delete(@RequestBody SignInDto signInDto){
-        memberService.delete(signInDto);
+    public void delete(@RequestHeader(name = "Authorization") String token){
+        String userId = jwtProvider.getUserIdByToken(token);
+        memberService.delete(userId);
     }
 
     @ApiOperation("회원 정보 조회")

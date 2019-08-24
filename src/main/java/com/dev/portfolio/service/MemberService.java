@@ -14,12 +14,14 @@ import com.dev.portfolio.security.JwtProvider;
 import lombok.extern.java.Log;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Log
+@Transactional
 public class MemberService{
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -84,9 +86,9 @@ public class MemberService{
         memberRepository.save(member);
     }
 
-    public void delete(SignInDto signInDto){
+    public void delete(String userId){
         //비밀번호 확인 후 같으면 삭제
-        memberRepository.deleteById(signInDto.getId());
+        memberRepository.deleteById(userId);
     }
 
     public MemberDto getMemberInfo(String userId){

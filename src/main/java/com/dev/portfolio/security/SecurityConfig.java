@@ -36,16 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_ARR = {
             "/v2/api-docs",
             "/configuration/ui",
-            "/swagger-resources",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**"
-    };
-    private static final List<String> AUTH_LIST = Arrays.asList(
             "/swagger-resources/**",
-            "/swagger-ui.html**",
+            "/configuration/security",
+            "/swagger-ui.html/**",
             "/webjars/**",
-            "favicon.ico");
+            "favicon.ico"
+    };
 
     public SecurityConfig(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder, HttpAuthenticationEntryPoint httpAuthenticationEntryPoint,
                           AccessDeniedHandlerCustom accessDeniedHandlerCustom, LogoutSuccessHandlerCustom logoutSuccessHandlerCustom, AuthenticationTokenFilter authenticationTokenFilter){
@@ -89,9 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(AUTH_ARR)
+                .antMatchers(HttpMethod.POST, "/portfolio/sign")
                 .antMatchers(HttpMethod.POST, "/portfolio/sign/user")
-                .antMatchers(HttpMethod.POST, "/portfolio/sign/admin")
-                .antMatchers(HttpMethod.POST, "/portfolio/sign");
+                .antMatchers(HttpMethod.POST, "/portfolio/sign/admin");
 
     }
 
