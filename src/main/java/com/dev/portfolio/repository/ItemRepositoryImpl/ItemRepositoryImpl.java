@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,39 +41,54 @@ public class ItemRepositoryImpl extends QuerydslRepositorySupport implements Ite
     public List<ContentsInItemDto> getContentsInItem(String user_id, Long item_no) {
         JPAQuery<ContentsInItemDto> jpaQuery = new JPAQuery<>(entityManager);
         jpaQuery.select(contentsInItem)
-                .from(item)
-                .join(contentsInItem)
-                .where(contentsInItem.item.ino.eq(item_no).and(item.member.id.eq(user_id)));
+                .from(contentsInItem)
+                .where(contentsInItem.item.ino.eq(item_no)
+                        .and(contentsInItem.item.member.id.eq(user_id)));
         List<ContentsInItemDto> contents = jpaQuery.fetch();
+
         return contents;
     }
 
     @Override
+    @Transactional
     public void deleteContentsInItem(String user_id, Long item_no, Long contents_no) {
-        JPADeleteClause deleteContents = new JPADeleteClause(entityManager, item);
-        deleteContents.where(contentsInItem.contentNo.eq(contents_no).and(item.member.id.eq(user_id)).and(item.ino.eq(item_no)));
+        JPADeleteClause deleteContents = new JPADeleteClause(entityManager, contentsInItem);
+        deleteContents.where(contentsInItem.contentNo.eq(contents_no)
+                            .and(contentsInItem.item.ino.eq(item_no))
+                            .and(contentsInItem.member.id.eq(user_id)))
+                        .execute();
     }
 
     @Override
+    @Transactional
     public String updateItemTitle(String user_id, Long item_no, String title) {
         JPAUpdateClause updateClause = new JPAUpdateClause(entityManager,item);
-        updateClause.set(item.title,title)
-                .where(item.ino.eq(item_no).and(item.member.id.eq(user_id)));
+        updateClause.set(item.title, title)
+                .where(item.ino.eq(item_no).and(item.member.id.eq(user_id)))
+                .execute();
         return title;
     }
 
     @Override
+    @Transactional
     public ContentsInItemDto updateContentsInItem(String user_id, Long item_no, Long contents_no, ContentsInItemDto contentsInItemDto) {
         JPAUpdateClause updateClause = new JPAUpdateClause(entityManager,contentsInItem);
         updateClause.set(contentsInItem.content,contentsInItemDto.getContent())
-                .where(contentsInItem.contentNo.eq(contents_no).and(contentsInItem.item.ino.eq(item_no).and(item.member.id.eq(user_id))));
+                .where(contentsInItem.contentNo.eq(contents_no)
+                 .and(contentsInItem.item.ino.eq(item_no)
+                 .and(contentsInItem.member.id.eq(user_id))))
+                .execute();
         return contentsInItemDto;
     }
 
     @Override
+    @Transactional
     public void deleteItem(String user_id, Long item_no) {
         JPADeleteClause deleteClauseItem = new JPADeleteClause(entityManager,item);
-        deleteClauseItem.where(item.ino.eq(item_no).and(item.member.id.eq(user_id)));
+        JPADeleteClause deleteClauseContents = new JPADeleteClause(entityManager,contentsInItem);
+        deleteClauseContents.where(contentsInItem.item.ino.eq(item_no).and(contentsInItem.member.id.eq(user_id))).execute();
+        deleteClauseItem.where(item.ino.eq(item_no).and(item.member.id.eq(user_id)))
+                        .execute();
 //        JPADeleteClause deleteClauseContents = new JPADeleteClause(entityManager,contentsInItem);
 //        deleteClauseContents.where(contentsInItem.item.member.id.eq(user_id).and(contentsInItem.item.ino.eq(item_no)));
 //        deleteClauseItem.where(item.ino.eq(item_no));

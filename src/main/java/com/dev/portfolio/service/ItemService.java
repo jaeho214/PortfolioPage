@@ -55,13 +55,13 @@ public class ItemService {
         List<ContentsInItemDto> contentsInItemList = new ArrayList<>();
         Member member = new Member();
         member.setId(userId);
+        itemDto.setMember(member);
         Item item = itemDto.toEntity(); // 다른 객체가 리턴되어서 자꾸 다른 Item으로 들어갔던 것임
         contentsDto.forEach((contents) -> {
             contentsInItemList.add(
                     ContentsInItemDto.builder()
                             .category(contents.getCategory())
                             .content(contents.getContent())
-                            .member(member)
                             .item(item)
                             .build()
             );

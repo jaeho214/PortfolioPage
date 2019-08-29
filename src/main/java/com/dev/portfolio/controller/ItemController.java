@@ -8,6 +8,7 @@ import com.dev.portfolio.model.dto.ItemDto;
 import com.dev.portfolio.model.dto.ItemWrapperDto;
 import com.dev.portfolio.security.JwtProvider;
 import com.dev.portfolio.service.ItemService;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,7 @@ public class ItemController {
         itemService.deleteContentsInItem(userId, item_no, contents_no);
     }
 
-    @ApiOperation("자기소개서 제목을 눌렀을 때 나오는 항목 수정")
+    @ApiOperation("자기소개서 제목을 눌렀을 때 나오는 항목 내용만 수정")
     @PutMapping("/{item_no}/{contents_no}")
     public ContentsInItemDto updateContentsInItem(@RequestHeader(name = "Authorization") String token, @PathVariable Long item_no, @PathVariable Long contents_no, @RequestBody ContentsInItemDto contentsInItemDto){
         String userId = jwtProvider.getUserIdByToken(token);

@@ -36,9 +36,9 @@ public class ContentsController {
     }
 
     @ApiOperation("자기소개서 항목 삭제")
-    @DeleteMapping
-    public void deleteContents(@RequestHeader(name = "Authorization") String token, @RequestBody ContentsDto contentsDto) {
-        contentsService.deleteContents(token, contentsDto.getContentNo());
+    @DeleteMapping("/{contents_no}")
+    public void deleteContents(@RequestHeader(name = "Authorization") String token, @PathVariable Long contents_no) {
+        contentsService.deleteContents(token, contents_no);
     }
 
 
