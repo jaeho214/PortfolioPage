@@ -60,11 +60,7 @@ public class MemberController {
     @ApiOperation("회원 정보 조회")
     @GetMapping("/info")
     public MemberDto getMember(@RequestHeader(name = "Authorization") String token){
-        System.out.println(token);
         String userId = jwtProvider.getUserIdByToken(token);
-        log.info("=============================");
-        log.info(userId + "의 회원 정보 조회");
-        log.info("=============================");
         return memberService.getMemberInfo(userId);
     }
 

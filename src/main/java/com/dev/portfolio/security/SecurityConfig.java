@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.PUT, "/portfolio/sign").hasRole("USER")
                         .antMatchers(HttpMethod.DELETE, "/portfolio/sign").hasRole("USER")
                         .antMatchers("/manageMember").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().anonymous()
                     .and()
                         .exceptionHandling().authenticationEntryPoint(httpAuthenticationEntryPoint).accessDeniedHandler(accessDeniedHandlerCustom)
                     .and()

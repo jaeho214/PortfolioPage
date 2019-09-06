@@ -7,6 +7,8 @@ package com.dev.portfolio.security;
 
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -17,8 +19,11 @@ import java.io.IOException;
 
 @Component
 public class HttpAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
+    private static final Logger logger = LoggerFactory.getLogger(AccessDeniedHandlerCustom.class);
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException{
+        logger.error("AuthenticationException ===> HttpAuthenticationEntryPoint");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 

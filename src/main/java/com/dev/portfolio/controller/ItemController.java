@@ -2,20 +2,19 @@ package com.dev.portfolio.controller;
 
 //자기소개서(Contents)들을 여러개 모아서 Item과 Join
 
-import com.dev.portfolio.model.dto.ContentsDto;
+import com.dev.portfolio.exception.UserDefineException;
 import com.dev.portfolio.model.dto.ContentsInItemDto;
 import com.dev.portfolio.model.dto.ItemDto;
 import com.dev.portfolio.model.dto.ItemWrapperDto;
 import com.dev.portfolio.security.JwtProvider;
 import com.dev.portfolio.service.ItemService;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 
 @Log
 @RestController
@@ -35,7 +34,11 @@ public class ItemController {
     public List<ItemDto> getItems(@RequestHeader(name = "Authorization") String token){
         String userId = jwtProvider.getUserIdByToken(token);
         log.info("============= " + userId + "의 자기소개서 목록 출력 =============");
-        return itemService.getItems(userId);
+        List<ItemDto> items = itemService.getItems(userId);
+        if(items == null){
+            throw new UserDefineException("등록된 자기소개서가 없습니다.", HttpStatus.NO_CONTENT);
+        }
+        return items;
     }
 
     @ApiOperation("자기소개서 제목을 눌렀을 때 나오는 항목들 출력")

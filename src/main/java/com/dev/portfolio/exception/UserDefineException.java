@@ -15,11 +15,6 @@ public class UserDefineException extends RuntimeException{
         super(message);
     }
 
-    public UserDefineException(String message, String originalErrorMessage){
-        super(message);
-        this.originalErrorMessage = originalErrorMessage;
-    }
-
     public UserDefineException(String message, HttpStatus errorCode){
         super(message);
         this.errorCode = errorCode;

@@ -19,7 +19,8 @@ public class CertificateDto {
     private String uri;// 사본 이미지 경로
 
     @Builder
-    public CertificateDto(String certification, String date, String organization, String uri){
+    public CertificateDto(Long certiNo, String certification, String date, String organization, String uri){
+        this.certiNo = certiNo;
         this.certification = certification;
         this.date = date;
         this.organization = organization;

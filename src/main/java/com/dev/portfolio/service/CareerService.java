@@ -7,18 +7,14 @@ package com.dev.portfolio.service;
 import com.dev.portfolio.model.dto.CareerDto;
 import com.dev.portfolio.model.entity.Career;
 import com.dev.portfolio.model.entity.Member;
-import com.dev.portfolio.model.entity.MemberRole;
 import com.dev.portfolio.repository.CareerRepository;
 import com.dev.portfolio.security.JwtProvider;
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Log
 public class CareerService {
 
     private CareerRepository careerRepository;
@@ -35,17 +31,16 @@ public class CareerService {
 
         List<CareerDto> careerDtoList = new ArrayList<>();
         List<Career> careers = careerRepository.findAllByMember_Id(userId);
-        careers.forEach((career) -> {
-            careerDtoList.add(
-                    CareerDto.builder()
+        careers.forEach((career) -> careerDtoList.add(
+                CareerDto.builder()
+                        .careerNo(career.getCareerNo())
                         .company(career.getCompany())
                         .department(career.getDepartment())
                         .details(career.getDetails())
                         .reason(career.getReason())
                         .term(career.getTerm())
                         .build()
-            );
-        });
+        ));
         return careerDtoList;
     }
 
@@ -60,7 +55,6 @@ public class CareerService {
 
     //경력을 수정하는 메소드
     public void updateCareer(String token, CareerDto careerDto){
-        log.info("---경력 수정---");
         String userId = jwtProvider.getUserIdByToken(token);
         Career career = careerRepository.findCareerByCareerNoAndMember_Id(careerDto.getCareerNo(), userId);
         career.updateCareer(careerDto);

@@ -33,17 +33,16 @@ public class EducationService {
         String userId = jwtProvider.getUserIdByToken(token);
         List<EducationDto> educationDtoList = new ArrayList<>();
         List<Education> educations = educationRepository.findAllByMember_Id(userId);
-        educations.forEach((education) -> {
-            educationDtoList.add(
-                    EducationDto.builder()
-                            .grade(education.getGrade())
-                            .major(education.getMajor())
-                            .note(education.getNote())
-                            .organ(education.getOrgan())
-                            .term(education.getTerm())
-                            .build()
-            );
-        });
+        educations.forEach((education) -> educationDtoList.add(
+                EducationDto.builder()
+                        .eno(education.getEno())
+                        .grade(education.getGrade())
+                        .major(education.getMajor())
+                        .note(education.getNote())
+                        .organ(education.getOrgan())
+                        .term(education.getTerm())
+                        .build()
+        ));
         return educationDtoList;
     }
 

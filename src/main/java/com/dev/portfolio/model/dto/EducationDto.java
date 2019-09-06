@@ -18,7 +18,8 @@ public class EducationDto {
     private String note; // 비고
 
     @Builder
-    public EducationDto(String term, String organ, String major, String grade, String note){
+    public EducationDto(Long eno, String term, String organ, String major, String grade, String note){
+        this.eno = eno;
         this.term = term;
         this.organ = organ;
         this.major = major;

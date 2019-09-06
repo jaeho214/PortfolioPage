@@ -6,7 +6,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ContentsDto {
     private Long contentNo;
@@ -16,7 +15,8 @@ public class ContentsDto {
 
 
     @Builder
-    public ContentsDto(String category, String content,Member member){
+    public ContentsDto(Long contentNo, String category, String content,Member member){
+        this.contentNo = contentNo;
         this.category = category;
         this.content = content;
         this.member = member;

@@ -31,16 +31,15 @@ public class CertificateService {
         String userId = jwtProvider.getUserIdByToken(token);
         List<CertificateDto> certificateDtoList = new ArrayList<>();
         List<Certificate> certificates = certificateRepository.findAllByMember_Id(userId);
-        certificates.forEach((certificate) -> {
-            certificateDtoList.add(
-                    CertificateDto.builder()
-                            .certification(certificate.getCertification())
-                            .date(certificate.getDate())
-                            .organization(certificate.getOrganization())
-                            .uri(certificate.getUri())
-                            .build()
-            );
-        });
+        certificates.forEach((certificate) -> certificateDtoList.add(
+                CertificateDto.builder()
+                        .certiNo(certificate.getCertiNo())
+                        .certification(certificate.getCertification())
+                        .date(certificate.getDate())
+                        .organization(certificate.getOrganization())
+                        .uri(certificate.getUri())
+                        .build()
+        ));
 
         return certificateDtoList;
     }

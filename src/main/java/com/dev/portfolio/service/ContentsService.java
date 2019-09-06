@@ -31,14 +31,13 @@ public class ContentsService {
         String userId = jwtProvider.getUserIdByToken(token);
         List<ContentsDto> contentsDtoList = new ArrayList<>();
         List<Contents> contents = contentsRepository.findAllByMember_Id(userId);
-        contents.forEach((content) -> {
-            contentsDtoList.add(
-                    ContentsDto.builder()
-                            .category(content.getCategory())
-                            .content(content.getContent())
-                            .build()
-            );
-        });
+        contents.forEach((content) -> contentsDtoList.add(
+                ContentsDto.builder()
+                        .contentNo(content.getContentNo())
+                        .category(content.getCategory())
+                        .content(content.getContent())
+                        .build()
+        ));
         return contentsDtoList;
     }
 

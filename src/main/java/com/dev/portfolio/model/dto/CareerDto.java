@@ -19,7 +19,8 @@ public class CareerDto {
     private String reason; // 퇴사사유
 
     @Builder
-    public CareerDto(String company, String term, String details, String department, String reason){
+    public CareerDto(Long careerNo, String company, String term, String details, String department, String reason){
+        this.careerNo = careerNo;
         this.company = company;
         this.term = term;
         this.department = department;

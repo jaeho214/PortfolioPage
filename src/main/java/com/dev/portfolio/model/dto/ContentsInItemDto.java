@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ContentsInItemDto {
     private Long contentNo;
@@ -28,7 +27,8 @@ public class ContentsInItemDto {
     private Item item;
 
     @Builder
-    public ContentsInItemDto(String category, String content, Member member, Item item){
+    public ContentsInItemDto(Long contentNo, String category, String content, Member member, Item item){
+        this.contentNo = contentNo;
         this.category = category;
         this.content = content;
         this.member = member;
