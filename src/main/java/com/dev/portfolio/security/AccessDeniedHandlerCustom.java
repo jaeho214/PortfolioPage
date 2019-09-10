@@ -2,6 +2,7 @@ package com.dev.portfolio.security;
 
 /*
     권한이 없다면 접근이 불가하다는 의미로 에러코드를 보내줌
+    원래는 403페이지를 띄워줌
  */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
